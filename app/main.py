@@ -11,6 +11,7 @@ Architecture:
                                                   ├── web_search → DuckDuckGo
                                                   └── model calls → LiteLLM (mistral-small)
 """
+
 import json
 import logging
 import time
@@ -90,9 +91,7 @@ async def _sse_stream(request_id: str, model: str, content: str):
             "object": "chat.completion.chunk",
             "created": int(time.time()),
             "model": model,
-            "choices": [
-                {"index": 0, "delta": {"content": piece}, "finish_reason": None}
-            ],
+            "choices": [{"index": 0, "delta": {"content": piece}, "finish_reason": None}],
         }
         yield f"data: {json.dumps(data)}\n\n"
 
@@ -115,7 +114,10 @@ async def chat_completions(request: ChatRequest):
 
     logger.info(
         "Agent request id=%s model=%s llm=%s messages=%d",
-        request_id, request.model, llm_model, len(messages),
+        request_id,
+        request.model,
+        llm_model,
+        len(messages),
     )
 
     content = await run(messages, model_name=llm_model)

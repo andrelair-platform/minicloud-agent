@@ -2,6 +2,7 @@
 Tool implementations for the Minicloud research agent.
 Each tool is an async function decorated with @tool for LangGraph compatibility.
 """
+
 import logging
 import os
 
@@ -47,6 +48,7 @@ async def web_search(query: str) -> str:
     external regulatory updates, market data, or general knowledge questions."""
     try:
         from ddgs import DDGS
+
         results = list(DDGS().text(query, max_results=5))
         if not results:
             return "No web results found for this query."
