@@ -8,7 +8,8 @@ from fastapi.testclient import TestClient
 
 @pytest.fixture()
 def client():
-    with patch("app.agent.run", new_callable=AsyncMock, return_value="mocked answer") as _mock:
+    # Patch in app.main's namespace — that's where run lands after `from .agent import run`
+    with patch("app.main.run", new_callable=AsyncMock, return_value="mocked answer") as _mock:
         from app.main import app
 
         yield TestClient(app), _mock
