@@ -20,7 +20,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from .agent import run, DEFAULT_MODEL
+from .agent import DEFAULT_MODEL, run
 
 logging.basicConfig(
     level=logging.INFO,
